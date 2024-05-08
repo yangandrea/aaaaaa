@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<form method="post" action="pages/negozio.php">
+<form method="post" action="pages/login_handler.php">
     <label for="username">Username:</label>
     <input type="text" id="username" name="username">
     <br>

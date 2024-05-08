@@ -8,21 +8,22 @@ if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-$description = $_POST['description'];
-$price = $_POST['price'];
+    $name = $_POST['name'];
+    $description = $_POST['description'];
+    $price = $_POST['price'];
 
-if (isset($_FILES['image'])) {
-    $image = $_FILES['image'];
-    $target_dir = "../images/";
-    $target_file = $target_dir . basename($image["name"]);
+    if (isset($_FILES['image'])) {
+        $image = $_FILES['image'];
+        $target_dir = "../images/";
+        $target_file = $target_dir . basename($image["name"]);
 
-    if (move_uploaded_file($image["tmp_name"], $target_file)) {
-        echo "The image has been uploaded.";
-    } else {
-        echo "Sorry, there was an error uploading your image.";
+        if (move_uploaded_file($image["tmp_name"], $target_file)) {
+            echo "The image has been uploaded.";
+        } else {
+            echo "Sorry, there was an error uploading your image.";
+        }
     }
-}
-    $sql = "INSERT INTO Products (description, price, image) VALUES ('$description', $price, '$target_file')";
+    $sql = "INSERT INTO Products (name, description, price, immagine) VALUES ('$name', '$description', $price, '$target_file')";
     if ($conn->query($sql) === TRUE) {
         echo "New product added successfully";
     } else {
@@ -32,6 +33,9 @@ if (isset($_FILES['image'])) {
 ?>
 
 <form method="post" enctype="multipart/form-data">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name">
+    <br>
     <label for="description">Description:</label>
     <input type="text" id="description" name="description">
     <br>
@@ -43,3 +47,4 @@ if (isset($_FILES['image'])) {
     <br>
     <button type="submit">Add Product</button>
 </form>
+<a href="negozio.php" type="button">ritorna al negozio</a>

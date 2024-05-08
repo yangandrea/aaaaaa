@@ -61,29 +61,3 @@ $conn->close();
 </div>
 </body>
 </html>
-
-<?php
-//session_start();
-//include "Connessione.php";
-//
-//if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//    $username = $_POST['username'];
-//    $password = $_POST['password'];
-//
-//    if ($username === 'admin' || $username === 'root') {
-//        header('Location: admin.php');
-//        exit;
-//    }
-//
-//    $sql = "SELECT * FROM Users WHERE username= '$username' AND password= '$password'";
-//    $result = $conn->query($sql);
-//
-//    if ($result->num_rows > 0) {
-//        $_SESSION['username'] = $username;
-//        header('Location: ../index.php');
-//        exit;
-//    } else {
-//        echo 'Invalid credentials.';
-//    }
-//}
-//?>
