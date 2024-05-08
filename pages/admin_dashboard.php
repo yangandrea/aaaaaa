@@ -57,11 +57,13 @@ $result = $conn->query($sql);
             <label for="action">Action:</label>
             <select id="action" name="action">
                 <option value="update">Update</option>
-                <option value="add">Add</option>
                 <option value="delete">Delete</option>
             </select>
             <br>
             <button type="submit">Submit</button>
+        </form>
+        <form method="post" action="aggiunta.php">
+            <button type="submit" class="btn btn-primary" name="add">Aggiungi</button>
         </form>
     <?php endwhile; ?>
 <?php else: ?>
