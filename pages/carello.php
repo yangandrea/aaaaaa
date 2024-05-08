@@ -23,10 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body class="carello-background" >
 <div>
-    <button type="button"><a href="registrazione.php">Register</a></button>
-    <button type="button"><a href="login.php">login</a></button>
-    <button type="button"><a href="admin.php">Admin</a></button>
-    <button type="button"><a href="carello.php">carello</a></button>
+    <button type="button"><a href="negozio.php">negozio</a></button>
+    <button type="button"><a href="admin.php">admin</a></button>
 </div>
 <h2>Carrello</h2>
 <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>

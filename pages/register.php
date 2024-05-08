@@ -41,10 +41,6 @@ if ($result->num_rows > 0) {
         echo "User registered successfully";
     }
 }
+header('Location: ../index.php');
 ?>
 <br>
-<a href='../index.php'>Home</a>
-<a href='admin.php'>Login as Admin</a>
-<a href="login.php">fai l'accesso</a>
-<a href="edit_profile.php">modifica il tuo profilo</a>
-<a href="login.php">fai l'accesso</a>
