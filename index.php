@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,10 +13,12 @@
     <input type="password" id="password" name="password">
     <br>
     <button type="submit">Login</button>
-    <br>
-    <a href="pages/password_aggiorna.php">Password dimenticata</a>
-    <a href="pages/registrazione.php">Registrati</a>
-    <a href="pages/negozio.php">Guarda i nostri prodotti</a>
 </form>
+    <br>
+    <br>
+    <button><a href="pages/password_aggiorna.php">Password dimenticata</a></button>
+    <button><a href="pages/registrazione.php">Registrati</a></button>
+    <button><a href="pages/negozio.php">Guarda i nostri prodotti</a></button>
+
 </body>
 </html>

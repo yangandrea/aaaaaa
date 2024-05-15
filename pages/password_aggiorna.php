@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <input type="email" id="email" name="email">
     <br>
     <button type="submit">Reset Password</button>
+    <button><a href="../index.php">Anulla</a></button>
 </form>
 </body>
 </html>

@@ -6,29 +6,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Preparare la query SQL
-    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
+    // Se l'username è 'admin'
+    if ($username === 'admin') {
+        // Eseguire la query SQL
+        $sql = "SELECT username, password FROM users WHERE username = '$username'";
+        $result = $conn->query($sql);
 
-    // Eseguire la query
-    $stmt->execute();
+        // Ottenere i risultati
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
 
-    // Ottenere i risultati
-    $result = $stmt->get_result();
-    $user = $result->fetch_assoc();
+            $password = trim($password);
+            $user['password'] = trim($user['password']);
 
-    // Verificare se l'utente esiste e la password è corretta
-    if ($user && password_verify($password, $user['password'])) {
-        // Login riuscito, impostare l'username in sessione e reindirizzare l'utente
-        $_SESSION['username'] = $username;
-
-        if ($username === 'admin') {
-            header('Location: admin_dashboard.php');
+            if ($password === $user['password']) {
+                // Login riuscito, impostare l'username in sessione e reindirizzare l'utente
+                $_SESSION['username'] = $username;
+                header('Location: admin_dashboard.php');
+            } else {
+                echo 'Login failed, password does not match';
+            }
         } else {
-            header('Location: negozio.php');
+            echo 'Login failed, no such user';
         }
     } else {
-        echo 'Login failed, setting error message';
-        header('Location: ../index.php');
+        $_SESSION['username'] = $username;
+        header('Location: negozio.php');
     }
 }

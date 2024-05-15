@@ -41,7 +41,6 @@ $conn->close();
 </head>
 <body class="bg-warning">
 <button type="button"><a href="../index.php">login</a></button>
-<button type="button"><a href="admin.php">Admin</a></button>
 <button type="button"><a href="carello.php">carello</a></button>
 
 <div class="container">

@@ -29,6 +29,13 @@
         <br>
         <input type="submit" value="Submit">
     </form>
+    <button><a href="../index.php">Anulla</a></button>
 </div>
+<?php
+if (isset($_SESSION['error'])) {
+    echo "<script>alert('".$_SESSION['error']."')</script>";
+    unset($_SESSION['error']);
+}
+?>
 </body>
 </html>

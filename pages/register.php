@@ -30,7 +30,9 @@ $sql = "SELECT * FROM Users WHERE username= '$username' OR email= '$email'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
-    echo "Username or email already in use";
+    $_SESSION['error'] = "Username or email already in use";
+    header('Location: registrazione.php');
+    exit;
 } else {
     $sql = "INSERT INTO Users (username, password, email, birthdate) VALUES ('$username', '$password', '$email', '$birthdate')";
 

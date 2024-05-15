@@ -62,10 +62,11 @@ $result = $conn->query($sql);
             <br>
             <button type="submit">Submit</button>
         </form>
-        <form method="post" action="aggiunta.php">
-            <button type="submit" class="btn btn-primary" name="add">Aggiungi</button>
-        </form>
+
     <?php endwhile; ?>
+    <form action="aggiunta.php">
+        <button type="submit" class="btn btn-primary" name="add">Aggiungi</button>
+    </form>
 <?php else: ?>
     <p>Admin does not exist.</p>
 <?php endif; ?>

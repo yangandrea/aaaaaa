@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body class="carello-background" >
 <div>
     <button type="button"><a href="negozio.php">negozio</a></button>
-    <button type="button"><a href="admin.php">admin</a></button>
 </div>
 <h2>Carrello</h2>
 <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
