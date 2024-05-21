@@ -18,6 +18,7 @@
     <br>
     <button><a href="pages/password_aggiorna.php">Password dimenticata</a></button>
     <button><a href="pages/registrazione.php">Registrati</a></button>
+<button><a href="pages/password_aggiorna.php">Password dimenticata</a></button>
     <button><a href="pages/negozio.php">Guarda i nostri prodotti</a></button>
 
 </body>

@@ -42,7 +42,10 @@ $conn->close();
 <body class="bg-warning">
 <button type="button"><a href="../index.php">login</a></button>
 <button type="button"><a href="carello.php">carello</a></button>
-
+<?php if (!empty($_SESSION['username'])): ?>
+    <button><a href="edit_profile.php">Modifica Profilo</a></button>
+    <button><a href="logout.php">Logout</a></button>
+<?php endif; ?>
 <div class="container">
     <?php foreach ($products as $product): ?>
         <div class="product">

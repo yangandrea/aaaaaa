@@ -9,6 +9,7 @@ h1{
 /*    background-size: cover;*/
 /*}*/
 a:focus{
+    text-decoration: none;
     outline: none;
 }
 a{
