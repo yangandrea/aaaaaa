@@ -34,15 +34,18 @@ $conn->close();
 <head>
     <title>Product</title>
     <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>-->
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>-->
+<!--    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>-->
 </head>
 <body class="bg-warning">
 <button type="button"><a href="../index.php">login</a></button>
 <button type="button"><a href="carello.php">carello</a></button>
-
+<?php if (!empty($_SESSION['username'])): ?>
+    <button><a href="edit_profile.php">Modifica Profilo</a></button>
+    <button><a href="logout.php">Logout</a></button>
+<?php endif; ?>
 <div class="container">
     <?php foreach ($products as $product): ?>
         <div class="product">

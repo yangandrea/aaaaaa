@@ -1,13 +1,18 @@
 <?php
 session_start();
-include "pages/Connessione.php";
-$result = $conn->query('SELECT * FROM Categories');
+include "Connessione.php";
+
+// Recupera l'ID della categoria dall'URL
+$idCategoria = $_GET['id'];
+
+// Esegui una query SQL per ottenere i prodotti per la categoria specificata
+$result = $conn->query("SELECT * FROM Products WHERE idCategoria = $idCategoria");
 ?>
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Home Page</title>
-        <link rel="stylesheet" href="css/style.css">
+        <title>Category Page</title>
+        <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <style>
             .card-img-top {
@@ -19,24 +24,8 @@ $result = $conn->query('SELECT * FROM Categories');
     </head>
     <body class="bg-dark">
     <header>
-        <h1>Creative Creations</h1>
+        <h1>Category Page</h1>
     </header>
-
-    <div style="border: 1px solid white">
-        <nav>
-            <ul>
-                <li style="border: 1px solid white;"><a href="pages/negozio.php">Negozio</a></li>
-                <li style="border: 1px solid white;"><a href="pages/carello.php">Carrello</a></li>
-                <?php
-                if (isset($_SESSION['username'])) {
-                    echo '<li style="border: 1px solid white;"><a href="pages/logout.php">Logout</a></li>';
-                } else {
-                    echo '<li style="border: 1px solid white;"><a href="pages/login.php">Login</a></li>';
-                }
-                ?>
-            </ul>
-        </nav>
-    </div>
 
     <main>
         <div class="container">
@@ -47,19 +36,25 @@ $result = $conn->query('SELECT * FROM Categories');
                 {
                     echo '<div class="col-sm-4">';
                     echo '<div class="card bg-light">';
-                    echo '<a href="pages/category.php?id=' . $row['id'] . '">';
                     echo '<img src="' . $row['immagine'] . '" class="card-img-top img-fluid" alt="' . $row['name'] . '">';
-                    echo '</a>';
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title">' . $row['name'] . '</h5>';
+                    echo '<p class="card-text">' . $row['description'] . '</p>';
+                    echo '<p class="card-text">' . $row['price'] . '</p>';
+                    echo '<form action="carello.php" method="post">';
+                    echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
+                    echo '<button type="submit" id="bottoneCarrello" class="btn btn-primary">Add to cart</button>';
+                    echo '</form>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
+
                 }
                 ?>
             </div>
         </div>
     </main>
+
     <footer>
         <p>&copy; 2024 Il nostro magico negozio online</p>
     </footer>
