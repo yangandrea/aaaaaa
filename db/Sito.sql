@@ -25,7 +25,8 @@ VALUES ('Tecnologia', '../images/Tecnologia.jpg'),
        ('Libri', '../images/libri.jpg'),
        ('Cucina', '../images/cucina.jpg'),
        ('Estetica', '../images/estetica.jpg'),
-       ('Videogiochi', '../images/videogiochi.jpg');
+       ('Videogiochi', '../images/videogiochi.jpg'),
+       ('Sport', '../images/sport.jpg');
 
 CREATE TABLE Products (
                           id INT AUTO_INCREMENT,

@@ -129,3 +129,40 @@ footer {
     background-color: deepskyblue; /* colore di sfondo */
     color: white;
 }
+
+.cookie-popup {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: #f5f5f5;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    display: none; /* Inizialmente nascosto */
+}
+
+.accept-cookies {
+    margin-left: 15px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #009578;
+    color: white;
+    border: none;
+}
+
+.card {
+    margin: 10px; /* Aggiungi spazio attorno alla card */
+}
+#emptyCartMessage {
+    color: white;
+}
+#cartTitle {
+    color: white;
+}
+#emptyCart{
+    color: white;
+    text-decoration: aliceblue;
+}
+#cardTitle {
+    color: white;
+}

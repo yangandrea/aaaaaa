@@ -25,7 +25,6 @@ $result = $conn->query('SELECT * FROM Categories');
     <div style="border: 1px solid white">
         <nav>
             <ul>
-                <li style="border: 1px solid white;"><a href="pages/negozio.php">Negozio</a></li>
                 <li style="border: 1px solid white;"><a href="pages/carello.php">Carrello</a></li>
                 <?php
                 if (isset($_SESSION['username'])) {
@@ -63,8 +62,25 @@ $result = $conn->query('SELECT * FROM Categories');
     <footer>
         <p>&copy; 2024 Il nostro magico negozio online</p>
     </footer>
+
+    <div id="cookie-popup" class="cookie-popup">
+        <p>Questo sito utilizza i cookie per garantire la migliore esperienza di navigazione possibile. <a href="policy.html">Scopri di più</a>.</p>
+        <button id="accept-cookies" class="accept-cookies">Accetta</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Mostra il pop-up quando la pagina viene caricata
+            document.getElementById('cookie-popup').style.display = 'block';
+
+            // Nasconde il pop-up quando l'utente accetta i cookie
+            document.getElementById('accept-cookies').onclick = function() {
+                document.getElementById('cookie-popup').style.display = 'none';
+            };
+        };
+    </script>
     </body>
-    </html>
+</html>
 <?php
 $conn->close();
 ?>

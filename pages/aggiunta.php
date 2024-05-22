@@ -47,4 +47,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <br>
     <button type="submit">Add Product</button>
 </form>
-<a href="negozio.php" type="button">ritorna al negozio</a>
+<a href="../index.php" type="button">ritorna al Homepage</a>

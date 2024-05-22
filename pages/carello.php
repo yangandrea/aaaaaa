@@ -23,18 +23,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body class="carello-background" >
-<div>
-    <button type="button"><a href="negozio.php">negozio</a></button>
+<div id="homepageButton">
+    <button type="button"><a href="../index.php">Homepage</a></button>
 </div>
-<h2>Carrello</h2>
+<h2 id="cartTitle">Carrello</h2>
 <?php if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0): ?>
     <div class="container">
         <div class="row">
             <?php foreach ($_SESSION['cart'] as $product_id => $product_details): ?>
-                <div class="col-sm">
+                <div class="col-sm" id="productDiv<?php echo $product_id; ?>">
                     <h2><?php echo $product_details['name']; ?></h2>
-                    <p><?php echo $product_details['description']; ?></p>
-                    <p>Price: <?php echo $product_details['price']; ?></p>
+                    <p id="productDescription<?php echo $product_id; ?>"><?php echo $product_details['description']; ?></p>
+                    <p id="productPrice<?php echo $product_id; ?>">Price: <?php echo $product_details['price']; ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-primary" name="emptyCart">Svuota carrello</button>
     </form>
 <?php else: ?>
-    <p>Nessun prodotto nel carrello.</p>
+    <p id="emptyCartMessage">Nessun prodotto nel carrello.</p>
 <?php endif; ?>
 </body>
 </html>
