@@ -3,7 +3,24 @@ session_start();
 include "Connessione.php";
 
 if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    echo 'Access denied.';
+    echo '<!DOCTYPE html>
+    <html>
+    <head>
+        <title>Accesso Negato</title>
+        <style>
+            body {
+                background-color: red;
+                font-size: 3em;
+                color: white;
+                text-align: center;
+                padding-top: 20%;
+            }
+        </style>
+    </head>
+    <body>
+        Accesso negato.
+    </body>
+    </html>';
     exit;
 }
 
@@ -13,23 +30,23 @@ $result = $conn->query($sql);
 $adminExists = $result->num_rows > 0;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $adminExists) {
-    $action = $_POST['action'];
+    $azione = $_POST['azione'];
     $id = $_POST['id'];
-    $description = $_POST['description'];
-    $price = $_POST['price'];
+    $descrizione = $_POST['descrizione'];
+    $prezzo = $_POST['prezzo'];
 
-    if ($action === 'update') {
-        $sql = "UPDATE Products SET description='$description', price=$price WHERE id=$id";
+    if ($azione === 'aggiorna') {
+        $sql = "UPDATE Products SET description='$descrizione', price=$prezzo WHERE id=$id";
         $conn->query($sql);
-        echo 'Product updated.';
-    } elseif ($action === 'add') {
-        $sql = "INSERT INTO Products (description, price) VALUES ('$description', $price)";
+        echo 'Prodotto aggiornato.';
+    } elseif ($azione === 'aggiungi') {
+        $sql = "INSERT INTO Products (description, price) VALUES ('$descrizione', $prezzo)";
         $conn->query($sql);
-        echo 'Product added.';
-    } elseif ($action === 'delete') {
+        echo 'Prodotto aggiunto.';
+    } elseif ($azione === 'elimina') {
         $sql = "DELETE FROM Products WHERE id=$id";
         $conn->query($sql);
-        echo 'Product deleted.';
+        echo 'Prodotto eliminato.';
     }
 }
 
@@ -40,35 +57,58 @@ $result = $conn->query($sql);
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
+    <title>Pannello di Amministrazione</title>
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
-<body>
-<?php if ($adminExists): ?>
-    <?php while ($product = $result->fetch_assoc()): ?>
-        <form method="post">
-            <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
-            <label for="description">Description:</label>
-            <input type="text" id="description" name="description" value="<?php echo $product['description']; ?>">
-            <br>
-            <label for="price">Price:</label>
-            <input type="number" id="price" name="price" value="<?php echo $product['price']; ?>">
-            <br>
-            <label for="action">Action:</label>
-            <select id="action" name="action">
-                <option value="update">Update</option>
-                <option value="delete">Delete</option>
-            </select>
-            <br>
-            <button type="submit">Submit</button>
-        </form>
+<body class="bg-dark">
+<header>
+    <h1>Pannello di Amministrazione</h1>
+</header>
 
-    <?php endwhile; ?>
-    <form action="aggiunta.php">
-        <button type="submit" class="btn btn-primary" name="add">Aggiungi</button>
-    </form>
-<?php else: ?>
-    <p>Admin does not exist.</p>
-<?php endif; ?>
+<main>
+    <div class="container">
+        <?php if ($adminExists): ?>
+            <?php while ($product = $result->fetch_assoc()): ?>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="card bg-light">
+                                <form method="post">
+                                    <input type="hidden" name="id" value="<?php echo $product['id']; ?>">
+                                    <label for="descrizione">Descrizione:</label>
+                                    <input type="text" id="descrizione" name="descrizione" value="<?php echo $product['description']; ?>">
+                                    <br>
+                                    <label for="prezzo">Prezzo:</label>
+                                    <input type="number" id="prezzo" name="prezzo" value="<?php echo $product['price']; ?>">
+                                    <br>
+                                    <label for="azione">Azione:</label>
+                                    <select id="azione" name="azione">
+                                        <option value="aggiorna">Aggiorna</option>
+                                        <option value="elimina">Elimina</option>
+                                    </select>
+                                    <br>
+                                    <input type="submit" value="Invia" style="color: black;">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endwhile; ?>
+            <form action="aggiunta.php">
+                <button type="submit" class="btn btn-primary" name="aggiungi">Aggiungi</button>
+            </form>
+        <?php else: ?>
+            <p>L'admin non esiste.</p>
+        <?php endif; ?>
+    </div>
+</main>
 </body>
 </html>

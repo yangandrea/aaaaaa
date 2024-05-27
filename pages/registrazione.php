@@ -6,10 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Document</title>
 </head>
-<body>
-<div id="paginaDiRegistrazione">
+<body class="bg-dark">
+<header>
+    <h1>Creative Creations</h1>
+</header>
+<div id="paginaDiRegistrazione" class="d-flex flex-column align-items-center justify-content-center">
     <form action="register.php" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username" placeholder="inserisci un nome utente" required oninvalid="this.setCustomValidity('Inserisci il tuo nome utente')"
@@ -28,9 +32,14 @@
                oninput="this.setCustomValidity('')" >
         <br>
         <input type="submit" value="Submit">
+        <button><a href="../index.php">Anulla</a></button>
     </form>
-    <button><a href="../index.php">Anulla</a></button>
+
+
 </div>
+<footer>
+    <p>&copy; 2024 Il nostro magico negozio online</p>
+</footer>
 <?php
 if (isset($_SESSION['error'])) {
     echo "<script>alert('".$_SESSION['error']."')</script>";

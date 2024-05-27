@@ -1,17 +1,13 @@
 <?php
 session_start();
 include "Connessione.php";
-
-// Recupera l'ID della categoria dall'URL
 $idCategoria = $_GET['id'];
-
-// Esegui una query SQL per ottenere i prodotti per la categoria specificata
 $result = $conn->query("SELECT * FROM Products WHERE idCategoria = $idCategoria");
 ?>
     <!DOCTYPE html>
     <html>
     <head>
-        <title>Category Page</title>
+        <title>Pagina Categoria</title>
         <link rel="stylesheet" href="../css/style.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <style>
@@ -24,31 +20,31 @@ $result = $conn->query("SELECT * FROM Products WHERE idCategoria = $idCategoria"
     </head>
     <body class="bg-dark">
     <header>
-        <h1>Category Page</h1>
+        <h1>Pagina Categoria</h1>
     </header>
 
     <main>
         <div class="container">
             <div class="row">
                 <?php
-                // Crea una colonna per ciascun prodotto
                 while ($row = $result->fetch_assoc())
                 {
                     echo '<div class="col-sm-4">';
                     echo '<div class="card bg-light">';
+                    echo '<a href="prodotto.php?id=' . $row['id'] . '">';
                     echo '<img src="' . $row['immagine'] . '" class="card-img-top img-fluid" alt="' . $row['name'] . '">';
+                    echo '</a>';
                     echo '<div class="card-body">';
                     echo '<h5 class="card-title">' . $row['name'] . '</h5>';
                     echo '<p class="card-text">' . $row['description'] . '</p>';
                     echo '<p class="card-text">' . $row['price'] . '</p>';
                     echo '<form action="carello.php" method="post">';
                     echo '<input type="hidden" name="product_id" value="' . $row['id'] . '">';
-                    echo '<button type="submit" id="bottoneCarrello" class="btn btn-primary">Add to cart</button>';
+                    echo '<button type="submit" id="bottoneCarrello" class="btn btn-primary">Aggiungi al carrello</button>';
                     echo '</form>';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';
-
                 }
                 ?>
             </div>

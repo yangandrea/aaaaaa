@@ -3,11 +3,6 @@ h1{
     font-size: 20px;
     text-align: center;
 }
-/*body{*/
-/*    background-color: yellow;*/
-/*    font-family: Arial, sans-serif;*/
-/*    background-size: cover;*/
-/*}*/
 a:focus{
     text-decoration: none;
     outline: none;
@@ -16,32 +11,10 @@ a{
     text-decoration: none;
    color: black;
 }
-/*label {*/
-/*    text-align: center;*/
-/*}*/
-/*form {*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    height: 95vh;*/
-/*}*/
 
-/*#paginaDiRegistrazione {*/
-/*    border: 1px solid #000;*/
-/*    padding: 20px;*/
-/*    margin: 20px auto;*/
-/*    width: 50%;*/
-/*    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);*/
-/*}*/
-/*.ciao{*/
-/*    background: cyan;*/
-/*}*/
-/*.carello-background {*/
-/*    background-color: red;*/
-/*}*/
 body {
-    background: black;
+    background: #343a40;
+    color: white;
 }
 
 #login{
@@ -119,7 +92,7 @@ footer {
     background-color: transparent; /* colore di sfondo */
     color: black; /* colore del testo */
     padding: 14px 20px; /* padding intorno al testo */
-    border: 1px solid;
+    border: 1px solid black;
     cursor: pointer; /* cambia il cursore quando si passa sopra */
     display: block;
     margin-left: auto;
@@ -168,4 +141,25 @@ footer {
 }
 .text-white {
     color: white;
+}
+#paginaDiRegistrazione {
+    color: white;
+}
+input[type="submit"] {
+    display: block;
+    margin: 0 auto;
+    color: black;
+}
+
+input[type="submit"]:hover {
+    color: white;
+    background-color: lightblue;
+}
+form {
+    text-align: center;
+}
+
+form input[type="text"], form input[type="password"] {
+    display: block;
+    margin: auto;
 }

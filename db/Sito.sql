@@ -40,9 +40,9 @@ CREATE TABLE Products (
 );
 
 INSERT INTO Products (name, description, price, immagine, idCategoria)
-VALUES ('Nome del prodotto', 'Descrizione del prodotto', 99.99, '../images/prodotto1.jpg', 1),
-       ('integrali', 'matematica', 300, '../images/prodotto2.jpg', 1),
-       ('fisica', 'fisica', 200, '../images/prodotto3.jpg', 1);
+VALUES ('Cuffie', 'Cuffie bluetooth', 29.99, '../images/cuffie.jpg', 1),
+       ('Controller TV', 'Controller TV', 14.99, '../images/controller.jpg', 1),
+       ('Auricolari', 'Auricolari', 19.99, '../images/auricolari.jpg', 1);
 
 CREATE TABLE Orders (
                         id INT AUTO_INCREMENT,

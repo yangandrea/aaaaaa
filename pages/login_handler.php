@@ -18,15 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if ($password === $user['password']) {
                 $_SESSION['username'] = $username;
+                $_SESSION['admin'] = true;
                 header('Location: admin_dashboard.php');
             } else {
-                echo 'Login failed, password does not match';
+                echo 'Accesso fallito, la password non corrisponde';
             }
         } else {
-            echo 'Login failed, no such user';
+            echo 'Accesso fallito, utente non esistente';
         }
     } else {
         $_SESSION['username'] = $username;
-        header('Location: index.php');
+        $_SESSION['admin'] = false;
+        header('Location: ../index.php');
     }
 }

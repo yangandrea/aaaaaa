@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "Connessione.php";
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -11,38 +12,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $Timestamp = strtotime(date("Y-m-d"));
 
     if ($birthdateTimestamp > $Timestamp) {
-        echo "La data di nascita è superiore alla data corrente.";
-        $_SESSION['username'] = $username;
-        $_SESSION['password'] = $password;
-        $_SESSION['email'] = $email;
-        echo "<br><a href='registrazione.php'>Torna alla registrazione</a>";
+        echo '<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Error</title>
+            <style>
+                body {
+                    background-color: red;
+                    font-size: 3em;
+                    color: white;
+                    text-align: center;
+                    padding-top: 20%;
+                }
+            </style>
+        </head>
+        <body>
+            La data di nascita è superiore alla data corrente.
+        </body>
+        </html>';
         exit;
     }
-
-    if (strlen($password) < 8) {
-        echo "La password deve contenere almeno 8 caratteri.";
-        echo "<br><a href='registrazione.php'>Torna alla registrazione</a>";
+    if ($result->num_rows > 0) {
+        $_SESSION['error'] = "Username or email already in use";
+        header('Location: registrazione.php');
         exit;
-    }
-}
-
-$sql = "SELECT * FROM Users WHERE username= '$username' OR email= '$email'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $_SESSION['error'] = "Username or email already in use";
-    header('Location: registrazione.php');
-    exit;
-} else {
-    $sql = "INSERT INTO Users (username, password, email, birthdate) VALUES ('$username', '$password', '$email', '$birthdate')";
-
-    if($conn->query($sql) === FALSE) {
-        echo "Error: " . $sql . "<br>" . $conn->error;
     } else {
-        $_SESSION['username'] = $username;
-        echo "User registered successfully";
+        $sql = "INSERT INTO Users (username, password, email, birthdate) VALUES ('$username', '$password', '$email', '$birthdate')";
+
+        if($conn->query($sql) === FALSE) {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        } else {
+            $_SESSION['username'] = $username;
+            echo "User registered successfully";
+        }
     }
+    header('Location: ../index.php');
 }
-header('Location: ../index.php');
 ?>
 <br>
