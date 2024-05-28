@@ -29,7 +29,7 @@ if (isset($_SESSION['username'])) {
 </head>
 <body class="bg-dark">
 <header>
-    <h1>Creative Creations</h1>
+    <h1>Creazioni Creative</h1>
 </header>
 <main>
     <div class="container">
@@ -49,7 +49,6 @@ if (isset($_SESSION['username'])) {
                             <br>
                             <button type="submit">Accedi</button>
                         </form>
-                        <button><a href="registrazione.php">Registrati</a></button>
                     </div>
                 </div>
             </div>
@@ -60,5 +59,10 @@ if (isset($_SESSION['username'])) {
 <footer>
     <p>&copy; 2024 Il nostro magico negozio online</p>
 </footer>
+
+<div id="cookie-popup" class="cookie-popup">
+    <p>Questo sito utilizza i cookie per garantire la migliore esperienza di navigazione possibile. <a href="policy.php">Scopri di più</a>.</p>
+    <button id="accept-cookies" class="accept-cookies">Accetta</button>
+</div>
 </body>
 </html>

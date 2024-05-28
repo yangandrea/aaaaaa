@@ -46,26 +46,11 @@ if (isset($_GET['id'])) {
         }
         .container-body {
         }
-        .button-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            margin-top: 78px; /* Aggiungi un margine superiore ai bottoni */
-        }
     </style>
 </head>
 <body class="bg-dark">
 <header>
     <h1>Creative Creations</h1>
-    <div class="button-container">
-        <?php if (isset($_SESSION['username'])): ?>
-            <form action="logout.php" method="post">
-                <button type="submit" class="btn btn-primary">Logout</button>
-            </form>
-        <?php else: ?>
-            <a href="login.php" class="btn btn-primary">Login</a>
-        <?php endif; ?>
-    </div>
 </header>
 
 <main>
@@ -85,7 +70,7 @@ if (isset($_GET['id'])) {
                         <p>Categoria: <?php echo $product['categoryName']; ?></p>
                         <form method="post" action="carello.php">
                             <input type="hidden" name="product_id" value="<?php echo $product['id']; ?>">
-                            <button type="submit" id="bottoneCarrello" class="btn btn-primary" <?php if (!isset($_SESSION['username'])) echo 'hidden'; ?>>Aggiungi al carello</button>
+                            <button type="submit" id="bottoneCarrello" class="btn btn-primary">Aggiungi al carello</button>
                         </form>
                     </div>
                 </div>
