@@ -17,7 +17,6 @@ if (isset($_SESSION['username'])) {
     $_SESSION['cart'] = array();
 }
 
-
 session_destroy();
 header('Location: ../index.php');
 exit;
