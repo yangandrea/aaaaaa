@@ -1,50 +1,31 @@
 <?php
-session_start();
 include "Connessione.php";
-
-if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    echo '<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Acesso negato</title>
-        <style>
-            body {
-                background-color: red;
-                font-size: 3em;
-                color: white;
-                text-align: center;
-                padding-top: 20%;
-            }
-        </style>
-    </head>
-    <body>
-        Acesso negato.
-    </body>
-    </html>';
-    exit;
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
     $price = $_POST['price'];
+    $idCategoria = $_POST['idCategoria'];
 
-    if (isset($_FILES['image'])) {
-        $image = $_FILES['image'];
-        $target_dir = "../images/";
-        $target_file = $target_dir . basename($image["name"]);
+    $immagine = $_FILES['immagine']['name'];
+    $target_dir = "../images/";
+    $target_file = $target_dir . basename($_FILES["immagine"]["name"]);
 
-        if (move_uploaded_file($image["tmp_name"], $target_file)) {
-            echo "L'immagine è stata caricata.";
-        } else {
-            echo "Spiacente, c'è stato un errore nel caricamento dell'immagine.";
+    // Select file type
+    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+    // Valid file extensions
+    $extensions_arr = array("jpg","jpeg","png","gif");
+
+    // Check extension
+    if(in_array($imageFileType,$extensions_arr) ){
+        // Upload file
+        if(move_uploaded_file($_FILES['immagine']['tmp_name'],$target_file)){
+            // Save the relative path of the image in the database
+            $sql = "INSERT INTO Products (name, description, price, immagine, idCategoria) VALUES ('$name', '$description', $price, '$target_file', $idCategoria)";
+            $conn->query($sql);
+            echo 'Prodotto aggiunto.';
         }
-    }
-    $sql = "INSERT INTO Products (name, description, price, immagine) VALUES ('$name', '$description', $price, '$target_file')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Nuovo prodotto aggiunto con successo";
-    } else {
-        echo "Errore: " . $sql . "<br>" . $conn->error;
     }
 }
 ?>
@@ -53,34 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Aggiungi Prodotto</title>
-    <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bg-dark">
-<header>
-    <h1>Aggiungi Prodotto</h1>
-</header>
-<main>
-    <div class="container">
-        <form method="post" enctype="multipart/form-data">
-            <label for="name">Nome:</label>
-            <input type="text" id="name" name="name">
-            <br>
-            <label for="description">Descrizione:</label>
-            <input type="text" id="description" name="description">
-            <br>
-            <label for="price">Prezzo:</label>
-            <input type="number" id="price" name="price">
-            <br>
-            <label for="image">Immagine:</label>
-            <input type="file" id="image" name="image">
-            <br>
-            <button type="submit">Aggiungi Prodotto</button>
-        </form>
-        <a href="../index.php" type="button">Ritorna alla Pagina Principale</a>
-    </div>
-</main>
-<footer>
-    <p>&copy; 2024 Il nostro magico negozio online</p>
-</footer>
+<body>
+<form action="aggiunta.php" method="post" enctype="multipart/form-data">
+    <label for="name">Nome:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <label for="description">Descrizione:</label><br>
+    <textarea id="description" name="description"></textarea><br>
+    <label for="price">Prezzo:</label><br>
+    <input type="number" id="price" name="price" step="0.01"><br>
+    <label for="idCategoria">ID Categoria:</label><br>
+    <input type="number" id="idCategoria" name="idCategoria"><br>
+    <label for="immagine">Immagine:</label><br>
+    <input type="file" id="immagine" name="immagine"><br>
+    <input type="submit" value="Aggiungi Prodotto">
+</form>
+<a href="admin_dashboard.php" class="btn btn-primary">Torna alla Dashboard</a>
 </body>
 </html>

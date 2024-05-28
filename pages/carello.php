@@ -1,10 +1,32 @@
 <?php
+global $conn;
 ini_set('session.cookie_lifetime', 24 * 60 * 60);
 session_start();
 
 include "Connessione.php";
+if (isset($_SESSION['username']) && !isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
+    $sql = "SELECT CartItems.product_id, CartItems.count, Products.name, Products.description, Products.price, Products.immagine
+        FROM CartItems
+        INNER JOIN Products ON CartItems.product_id = Products.id
+        WHERE CartItems.username = '{$_SESSION['username']}'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $product_id = $row['product_id'];
+        $_SESSION['cart'][$product_id] = array(
+            'count' => $row['count'],
+            'name' => $row['name'],
+            'description' => $row['description'],
+            'price' => $row['price'],
+            'immagine' => $row['immagine']
+        );
+    }
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['emptyCart'])) {
+        $sql = "DELETE FROM CartItems WHERE username = '{$_SESSION['username']}'";
+        $conn->query($sql);
         $_SESSION['cart'] = array();
     } elseif (isset($_POST['removeProduct'])) {
         $product_id = $_POST['removeProduct'];
@@ -14,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 unset($_SESSION['cart'][$product_id]);
             }
         }
-    } else {
+    } elseif (isset($_POST['product_id'])) {
         $product_id = $_POST['product_id'];
         $sql = "SELECT * FROM Products WHERE id = $product_id";
         $result = $conn->query($sql);
@@ -27,17 +49,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['cart'][$product_id] = $product;
             }
         }
+    } elseif (isset($_POST['placeOrder'])) {
+        $total = 0;
+        foreach ($_SESSION['cart'] as $product_id => $product_details) {
+            $total += $product_details['price'] * $product_details['count'];
+        }
+        $sql = "INSERT INTO Orders (username, total) VALUES ('{$_SESSION['username']}', $total)";
+        $conn->query($sql);
+        $_SESSION['cart'] = array();
     }
 }
-
 $total = 0;
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+if (isset($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $product_id => $product_details) {
         $total += $product_details['price'] * $product_details['count'];
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +88,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
         footer {
             margin-top: 50px;
         }
+
     </style>
 </head>
 <body class="bg-dark">
@@ -67,7 +96,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     <h1 style="color: #ffffff; text-align: center;">Carrello</h1>
 </header>
 <div id="homepageButton">
-    <button type="button"><a href="../index.php">Homepage</a></button>
+    <a href="../index.php" class="btn btn-primary">Homepage</a>
 </div>
 <div class="container">
     <div class="row">
@@ -87,7 +116,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                                     <p class="card-text">Quantity: <?php echo $product_details['count']; ?></p>
                                     <form method="post" action="carello.php">
                                         <input type="hidden" name="removeProduct" value="<?php echo $product_id; ?>">
-                                        <button type="submit" class="btn btn-danger">Rimuovi una unità</button>
+                                        <button type="submit" id="bottoneCarrelloRimuovi" class="btn btn-danger" >Rimuovi una unità</button>
                                     </form>
                                 </div>
                             </div>
@@ -104,7 +133,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                     <h5 class="card-title">Totale</h5>
                     <p class="card-text">Totale: <?php echo number_format($total, 2); ?> €</p>
                     <form method="post" action="carello.php">
-                        <button type="submit" class="btn btn-primary" name="emptyCart">Svuota carrello</button>
+                        <button type="submit" id="bottoneCarrello" name="emptyCart" class="btn btn-primary" >Svuota carrello</button>
                     </form>
                 </div>
             </div>
