@@ -1,20 +1,43 @@
 <?php
+global $conn;
 ini_set('session.cookie_lifetime', 24 * 60 * 60);
 session_start();
 
 include "Connessione.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['logout'])) {
+        foreach ($_SESSION['cart'] as $product_id => $product_details) {
+            $sql = "INSERT INTO CartDetails (order_id, product_id, count) VALUES ({$_SESSION['user_id']}, $product_id, {$product_details['count']}) ON DUPLICATE KEY UPDATE count = {$product_details['count']}";
+            $conn->query($sql);
+        }
+        $_SESSION['cart'] = array();
+    } elseif (isset($_POST['login'])) {
+        $sql = "SELECT product_id, count FROM CartDetails WHERE order_id = {$_SESSION['user_id']}";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            $_SESSION['cart'][$row['product_id']] = $row['count'];
+        }
+    }
     if (isset($_POST['emptyCart'])) {
+        // Empty cart in database
+        $sql = "DELETE FROM CartDetails WHERE order_id = {$_SESSION['user_id']}";
+        $conn->query($sql);
         $_SESSION['cart'] = array();
     } elseif (isset($_POST['removeProduct'])) {
         $product_id = $_POST['removeProduct'];
         if (isset($_SESSION['cart'][$product_id])) {
             $_SESSION['cart'][$product_id]['count'] -= 1;
             if ($_SESSION['cart'][$product_id]['count'] <= 0) {
+                // Remove product from database
+                $sql = "DELETE FROM CartDetails WHERE order_id = {$_SESSION['user_id']} AND product_id = $product_id";
+                $conn->query($sql);
                 unset($_SESSION['cart'][$product_id]);
+            } else {
+                $sql = "UPDATE CartDetails SET count = {$_SESSION['cart'][$product_id]['count']} WHERE order_id = {$_SESSION['user_id']} AND product_id = $product_id";
+                $conn->query($sql);
             }
         }
-    } else {
+    } elseif (isset($_POST['product_id'])) {
         $product_id = $_POST['product_id'];
         $sql = "SELECT * FROM Products WHERE id = $product_id";
         $result = $conn->query($sql);
@@ -26,6 +49,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $product['count'] = 1;
                 $_SESSION['cart'][$product_id] = $product;
             }
+            // Add product to database
+            $sql = "INSERT INTO CartDetails (order_id, product_id, count) VALUES ({$_SESSION['user_id']}, $product_id, {$_SESSION['cart'][$product_id]['count']}) ON DUPLICATE KEY UPDATE count = {$_SESSION['cart'][$product_id]['count']}";
+            $conn->query($sql);
         }
     }
 }
@@ -60,6 +86,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
         footer {
             margin-top: 50px;
         }
+
     </style>
 </head>
 <body class="bg-dark">
@@ -67,7 +94,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
     <h1 style="color: #ffffff; text-align: center;">Carrello</h1>
 </header>
 <div id="homepageButton">
-    <button type="button"><a href="../index.php">Homepage</a></button>
+    <a href="../index.php" class="btn btn-primary">Homepage</a>
 </div>
 <div class="container">
     <div class="row">
@@ -87,7 +114,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                                     <p class="card-text">Quantity: <?php echo $product_details['count']; ?></p>
                                     <form method="post" action="carello.php">
                                         <input type="hidden" name="removeProduct" value="<?php echo $product_id; ?>">
-                                        <button type="submit" class="btn btn-danger">Rimuovi una unità</button>
+                                        <button type="submit" id="bottoneCarrelloRimuovi" class="btn btn-danger" >Rimuovi una unità</button>
                                     </form>
                                 </div>
                             </div>
@@ -104,7 +131,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
                     <h5 class="card-title">Totale</h5>
                     <p class="card-text">Totale: <?php echo number_format($total, 2); ?> €</p>
                     <form method="post" action="carello.php">
-                        <button type="submit" class="btn btn-primary" name="emptyCart">Svuota carrello</button>
+                        <button type="submit" id="bottoneCarrello" name="emptyCart" class="btn btn-primary" >Svuota carrello</button>
                     </form>
                 </div>
             </div>

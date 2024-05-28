@@ -2,28 +2,6 @@
 session_start();
 include "Connessione.php";
 
-if (!isset($_SESSION['admin']) || $_SESSION['admin'] !== true) {
-    echo '<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Accesso Negato</title>
-        <style>
-            body {
-                background-color: red;
-                font-size: 3em;
-                color: white;
-                text-align: center;
-                padding-top: 20%;
-            }
-        </style>
-    </head>
-    <body>
-        Accesso negato.
-    </body>
-    </html>';
-    exit;
-}
-
 $sql = "SELECT * FROM Users WHERE username= 'admin' OR username= 'root'";
 $result = $conn->query($sql);
 
@@ -72,6 +50,11 @@ $result = $conn->query($sql);
 <header>
     <h1>Pannello di Amministrazione</h1>
 </header>
+<div style="float: left;text-align: left; padding-left: 10px;">
+    <form action="logout.php" method="post">
+        <button type="submit" class="btn btn-primary">Logout</button>
+    </form>
+</div>
 
 <main>
     <div class="container">

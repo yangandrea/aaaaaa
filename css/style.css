@@ -36,18 +36,18 @@ body {
 }
 
 button[type="submit"] {
-    background-color: transparent; /* colore di sfondo */
-    color: white; /* colore del testo */
-    padding: 14px 20px; /* padding intorno al testo */
+    background-color: transparent;
+    color: white;
+    padding: 14px 20px;
     border: 1px solid;
-    cursor: pointer; /* cambia il cursore quando si passa sopra */
+    cursor: pointer;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 
 button[type="submit"]:hover {
-    opacity: 0.8; /* cambia l'opacità quando si passa sopra */
+    opacity: 0.8;
 }
 header {
     background-color: transparent;
@@ -89,42 +89,23 @@ footer {
 }
 
 #bottoneCarrello {
-    background-color: transparent; /* colore di sfondo */
-    color: black; /* colore del testo */
-    padding: 14px 20px; /* padding intorno al testo */
+    background-color: transparent;
+    color: black;
+    padding: 14px 20px;
     border: 1px solid black;
-    cursor: pointer; /* cambia il cursore quando si passa sopra */
+    cursor: pointer;
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
 #bottoneCarrello:hover {
-    background-color: deepskyblue; /* colore di sfondo */
+    background-color: deepskyblue;
     color: white;
 }
 
-.cookie-popup {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 20px;
-    background-color: #f5f5f5;
-    text-align: center;
-    border-top: 1px solid #ccc;
-    display: none; /* Inizialmente nascosto */
-}
-
-.accept-cookies {
-    margin-left: 15px;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #009578;
-    color: white;
-    border: none;
-}
 
 .card {
-    margin: 10px; /* Aggiungi spazio attorno alla card */
+    margin: 10px;
 }
 #emptyCartMessage {
     color: white;
@@ -162,4 +143,19 @@ form {
 form input[type="text"], form input[type="password"] {
     display: block;
     margin: auto;
+}
+
+#bottoneCarrelloRimuovi {
+    background-color: transparent; /* colore di sfondo */
+    color: black; /* colore del testo */
+    padding: 14px 20px; /* padding intorno al testo */
+    border: 1px solid black;
+    cursor: pointer; /* cambia il cursore quando si passa sopra */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+#bottoneCarrelloRimuovi:hover {
+    background-color: red; /* colore di sfondo */
+    color: white;
 }
